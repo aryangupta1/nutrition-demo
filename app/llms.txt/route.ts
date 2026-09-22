@@ -1,4 +1,5 @@
 import { contact, home, practitioner, site } from "@/content/site";
+import { plain } from "@/lib/accent";
 import { absoluteUrl } from "@/lib/seo";
 import { isPreview } from "@/lib/site-mode";
 
@@ -27,10 +28,10 @@ function body(): string {
     "",
     "## Site",
     link(about.eyebrow, absoluteUrl("/#about"), about.lead),
-    link(services.heading, absoluteUrl("/#services"), services.lead),
-    link(approach.heading, absoluteUrl("/#approach"), approach.lead),
-    link(faq.heading, absoluteUrl("/#faq")),
-    link(cta.heading, absoluteUrl("/#contact"), home.footer.summary),
+    link(plain(services.heading), absoluteUrl("/#services"), services.lead),
+    link(plain(approach.heading), absoluteUrl("/#approach"), approach.lead),
+    link(plain(faq.heading), absoluteUrl("/#faq")),
+    link(plain(cta.heading), absoluteUrl("/#contact"), home.footer.summary),
     "",
     "## Booking and contact",
     link(hero.primaryCta.label, hero.primaryCta.href, `${practitioner.practiceName} online booking`),

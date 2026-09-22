@@ -8,6 +8,13 @@
  *   Search this file for "TODO" to see what Annette still needs to confirm.
  */
 
+import type { StockKey } from "./stock";
+
+/*
+ * Headings may mark ONE accent word with asterisks ("What Annette can *help* with").
+ * <Heading> renders it in the accent style; metadata, JSON-LD and llms.txt use plain() from lib/accent.ts.
+ */
+
 export type Link = { label: string; href: string };
 
 export type Clinic = {
@@ -26,6 +33,8 @@ export type Service = {
   summary: string;
   items: string[];
   note?: string;
+  /** Mood photo for the service tile (content/stock.ts). */
+  image?: StockKey;
 };
 
 export type ConsultType = {
@@ -39,6 +48,9 @@ export type Step = { title: string; body: string };
 export type FaqItem = { question: string; answer: string };
 
 export type Testimonial = { quote: string; name: string; context?: string };
+
+/** A floating label chip: a short verified label paired with a stock thumbnail. */
+export type Chip = { label: string; image: StockKey };
 
 export const practitioner = {
   name: "Annette Low",
@@ -153,11 +165,34 @@ export const home = {
       "I'm an Accredited Practising Dietitian and naturopath. I help adults and teenagers with digestive, metabolic, hormonal and chronic health concerns, in clinic in Marrickville and Potts Point and by telehealth across Australia.",
     primaryCta: { label: "Book a consultation", href: contact.bookingUrl },
     secondaryCta: { label: "Book a free 10-minute call", href: contact.bookingUrl },
+    // Floating chips on the headshot. Labels are verified facts (credentials / telehealth area).
+    chips: [
+      { label: "Accredited Practising Dietitian (APD)", image: "chip-herbs" },
+      { label: "Telehealth, Australia-wide", image: "chip-tea" },
+    ] satisfies Chip[],
+  },
+
+  // "Signs" pattern after the hero. Every chip label is copied verbatim from
+  // services.items[].items below (checked at build time in lib/content.ts).
+  concerns: {
+    eyebrow: "Where Annette can help",
+    heading: "Some of the *concerns* Annette helps with",
+    lead: "A few of the digestive, metabolic and hormonal concerns Annette works with. The full list is in her areas of expertise below.",
+    chips: [
+      { label: "Reflux and upper digestive symptoms", image: "chip-ginger-turmeric" },
+      { label: "PCOS", image: "chip-herbs" },
+      { label: "IBS, bloating and abdominal discomfort", image: "svc-digestive" },
+      { label: "Perimenopause and menopause", image: "chip-lemon" },
+      { label: "Insulin resistance, prediabetes and type 2 diabetes", image: "chip-oats" },
+      { label: "Food intolerances", image: "chip-greens" },
+      { label: "Thyroid conditions, including hypothyroidism", image: "chip-tea" },
+      { label: "High cholesterol and triglycerides", image: "svc-chronic" },
+    ] satisfies Chip[],
   },
 
   about: {
     eyebrow: "About Annette",
-    heading: "Evidence-based nutrition, with a whole-person view",
+    heading: "Evidence-based nutrition, with a *whole-person* view",
     lead:
       "Annette Low is an Accredited Practising Dietitian (APD) in private practice, with an Honours degree in Nutrition and Dietetics and an Advanced Diploma of Naturopathy.",
     paragraphs: [
@@ -165,6 +200,8 @@ export const home = {
       "Alongside medical nutrition therapy, Annette offers naturopathic services such as holistic health assessments, functional pathology testing and herbal supplement advice.",
       "Before nutrition, Annette completed a Master of Commerce and a Bachelor of Business (Communications). She describes it as a long journey, and one she's very glad she made.",
     ],
+    credentialsLabel: "Qualifications",
+    membershipsLabel: "Member of",
     quote: {
       text: "I haven't given up hope that everyone can improve their health via nutrition, even in small ways.",
       attribution: "Annette Low",
@@ -173,48 +210,56 @@ export const home = {
 
   services: {
     eyebrow: "Areas of expertise",
-    heading: "What Annette can help with",
+    heading: "What Annette can *help* with",
     lead:
       "Annette Low works with adults and teenagers on digestive, metabolic, hormonal, immune and chronic health concerns, using food first and adding supplements or functional testing where appropriate.",
     items: [
       {
         slug: "digestive-health",
+        image: "svc-digestive",
         title: "Digestive health",
         summary: "Support for ongoing gut symptoms and digestive conditions.",
         items: ["Reflux and upper digestive symptoms", "IBS, bloating and abdominal discomfort", "Constipation and diarrhoea", "SIBO", "Food intolerances and sensitivities"],
       },
       {
         slug: "metabolic-health",
+        image: "svc-metabolic",
         title: "Metabolic health & weight",
         summary: "Nutrition care for blood sugar, cholesterol and weight concerns.",
         items: ["Weight management", "Insulin resistance, prediabetes and type 2 diabetes", "High cholesterol and triglycerides", "Fatty liver disease", "Metabolic syndrome"],
       },
       {
         slug: "hormonal-health",
+        image: "svc-hormonal",
         title: "Hormonal health",
         summary: "Nutrition support through hormonal change and conditions.",
         items: ["Perimenopause and menopause", "PCOS", "Thyroid conditions, including hypothyroidism", "Hormone-related weight concerns"],
       },
       {
         slug: "allergies-immune",
+        image: "svc-allergies",
         title: "Allergies, intolerances & immunity",
         summary: "Working out which foods affect you, and supporting immune health.",
         items: ["Food intolerances", "Histamine-related symptoms", "Allergic conditions", "Recurrent infections"],
       },
       {
         slug: "chronic-conditions",
+        image: "svc-chronic",
         title: "Chronic health conditions",
         summary: "Long-term nutrition care as part of your health care team.",
         items: ["Cardiovascular disease", "Healthy ageing", "Osteoporosis and bone health", "Inflammatory conditions", "Complex health concerns"],
       },
       {
         slug: "functional-testing",
+        image: "svc-testing",
         title: "Functional health testing",
         summary: "Testing, where appropriate, to understand what's driving your symptoms.",
         items: ["Gut microbiome testing", "SIBO breath testing", "Vitamin and mineral testing", "Comprehensive thyroid testing", "Stress hormone testing"],
         note: "Functional tests aren't covered by Medicare and may involve additional costs.",
       },
     ] satisfies Service[],
+    consultHeading: "Two ways to *work* with Annette",
+    rebatesLabel: "Rebates",
     consultTypes: [
       {
         title: "Dietetic consultation",
@@ -231,7 +276,7 @@ export const home = {
 
   approach: {
     eyebrow: "How Annette works",
-    heading: "Patterns, processes and personalisation",
+    heading: "Patterns, processes and *personalisation*",
     lead:
       "Annette Low's approach combines evidence-based nutrition with a detailed look at your symptoms, health history, diet and relevant test results, because everyone responds to food differently.",
     pillars: [
@@ -239,7 +284,7 @@ export const home = {
       { title: "Health processes", body: "How digestion, metabolism and hormones influence the way your body is working and responding to food, with testing where appropriate." },
       { title: "Personal situation", body: "Your lifestyle, stress levels, routine and environment." },
     ] satisfies Step[],
-    stepsHeading: "What to expect",
+    stepsHeading: "What to *expect*",
     steps: [
       { title: "Initial consultation", body: "About 60 minutes to assess your needs and goals, gather information and identify health priorities." },
       { title: "Your treatment plan", body: "At the second session, Annette sets up your plan of action and treatment program." },
@@ -251,15 +296,15 @@ export const home = {
   // TODO: none published on her current site. Add only real, approved testimonials. Section hides when empty.
   testimonials: {
     eyebrow: "Client stories",
-    heading: "What clients say",
+    heading: "What clients *say*",
     items: [] as Testimonial[],
   },
 
   faq: {
     eyebrow: "FAQ",
-    heading: "Questions clients often ask",
+    heading: "Questions clients often *ask*",
     aside: {
-      heading: "Still wondering if it's the right fit?",
+      heading: "Still wondering if it's the right *fit*?",
       body: "Book a free 10-minute phone call to talk it through before you commit.",
       cta: { label: "Book a free 10-minute call", href: contact.bookingUrl },
     },
@@ -308,10 +353,11 @@ export const home = {
   },
 
   cta: {
-    heading: "Ready to talk about your health?",
+    heading: "Ready to talk about your *health*?",
     body: "Book a consultation online, or start with a free 10-minute phone call to see whether Annette is the right fit for you.",
     primaryCta: { label: "Book a consultation", href: contact.bookingUrl },
     secondaryCta: { label: `Call ${contact.phone}`, href: `tel:${contact.phoneE164}` },
+    clinicsLabel: "Clinics",
   },
 
   footer: {
@@ -443,7 +489,7 @@ export const preview = {
   needsInput: {
     testimonials: {
       eyebrow: "Client stories",
-      heading: "Your clients, in their own words",
+      heading: "Your clients, in their own *words*",
       body: "Real testimonials go here, shared with each client's permission. None are published on your current site, so this stays empty until you provide some.",
     },
     hours: {
@@ -456,7 +502,7 @@ export const preview = {
     },
   },
   fullBuildPanel: {
-    heading: "What the full site includes",
+    heading: "What the full site *includes*",
     items: [
       "All six areas of expertise, written up in full",
       "The complete FAQ, answered from your own site",

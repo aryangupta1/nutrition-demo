@@ -1,6 +1,8 @@
 import type { home, practitioner } from "@/content/site";
+import { FloatChips } from "@/components/motion/FloatChips";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
+import { Chip } from "@/components/ui/Chip";
 import { Container } from "@/components/ui/Container";
 import { Heading } from "@/components/ui/Heading";
 import { Image } from "@/components/ui/Image";
@@ -11,11 +13,23 @@ export type HeroProps = {
   image: typeof practitioner.image;
 };
 
-/** Page-top hero: the page's only H1, answer-first lead, CTAs and the headshot (preloaded LCP). */
+// Chip placements around the arch (presentation only; labels come from content).
+const chipPlacement = [
+  // Kept to the lower half (shoulders), clear of the face. Hidden below `sm`, where the arch is too narrow to keep them off her face.
+  "bottom-1/3 left-2 sm:-left-10 lg:-left-16",
+  "right-2 bottom-8 sm:-right-8 lg:-right-10",
+];
+
+/**
+ * Page-top hero: the page's only H1, answer-first lead, CTAs and the headshot (preloaded LCP).
+ * The H1 and headshot never animate. The chips only drift gently (no entrance), and not at all
+ * under reduced motion.
+ */
 export function Hero({ content, image }: HeroProps) {
+  const chips = content.chips.slice(0, chipPlacement.length);
   return (
-    <section className="overflow-hidden bg-surface pb-section pt-12 sm:pt-16 lg:pt-20">
-      <Container className="grid items-center gap-12 lg:grid-cols-12 lg:gap-16">
+    <section className="overflow-hidden bg-surface pt-12 pb-16 sm:pt-16 lg:pt-20 lg:pb-20">
+      <Container className="grid items-center gap-14 lg:grid-cols-12 lg:gap-16">
         <div className="lg:col-span-7">
           {content.eyebrow ? <Badge tone="primary">{content.eyebrow}</Badge> : null}
           <Heading as="h1" size="display" className="mt-6">
@@ -36,8 +50,8 @@ export function Hero({ content, image }: HeroProps) {
           </div>
         </div>
 
-        <div className="relative mx-auto w-full max-w-sm sm:max-w-md lg:col-span-5 lg:max-w-none">
-          <div aria-hidden="true" className="absolute inset-x-6 -bottom-6 top-12 rounded-arch bg-surface-sage" />
+        <FloatChips className="relative mx-auto w-full max-w-sm sm:max-w-md lg:col-span-5 lg:max-w-none">
+          <div aria-hidden="true" className="absolute inset-x-6 top-12 -bottom-6 rounded-arch bg-surface-sage" />
           <Image
             src={image.src}
             width={image.width}
@@ -48,7 +62,16 @@ export function Hero({ content, image }: HeroProps) {
             sizes="(min-width: 64rem) 36vw, (min-width: 40rem) 28rem, 90vw"
             className="relative aspect-4/5 w-full shadow-lift"
           />
-        </div>
+          {chips.length > 0 ? (
+            <ul className="contents">
+              {chips.map((chip, i) => (
+                <li key={chip.label} className={`absolute hidden sm:block ${chipPlacement[i]}`}>
+                  <Chip label={chip.label} image={chip.image} className="max-w-56" />
+                </li>
+              ))}
+            </ul>
+          ) : null}
+        </FloatChips>
       </Container>
     </section>
   );

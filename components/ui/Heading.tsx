@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { splitAccent } from "@/lib/accent";
 import { cn } from "@/lib/cn";
 
 type Level = "h1" | "h2" | "h3" | "h4" | "p";
@@ -12,9 +13,27 @@ const sizes: Record<Size, string> = {
   h4: "font-sans text-h4 font-semibold",
 };
 
+/** Renders "*word*" in a content string as the accent word (italic serif, primary colour). */
+export function Accent({ text }: { text: string }) {
+  return (
+    <>
+      {splitAccent(text).map((part, i) =>
+        part.accent ? (
+          <em key={i} className="font-display italic text-primary">
+            {part.text}
+          </em>
+        ) : (
+          part.text
+        ),
+      )}
+    </>
+  );
+}
+
 /**
  * Semantic level (`as`) is decoupled from visual `size`, so heading order stays
  * logical while the look can change. Colour inherits from the section tone.
+ * String children support one `*accent*` word (see lib/accent.ts).
  */
 export function Heading({
   as: Tag = "h2",
@@ -32,7 +51,7 @@ export function Heading({
   const visual: Size = size ?? (Tag === "p" ? "h3" : Tag);
   return (
     <Tag id={id} className={cn("text-balance text-text", sizes[visual], className)}>
-      {children}
+      {typeof children === "string" ? <Accent text={children} /> : children}
     </Tag>
   );
 }

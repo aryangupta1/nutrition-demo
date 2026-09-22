@@ -31,7 +31,9 @@ export function LockChip({ kind = "lock", label, className }: { kind?: "lock" | 
     <span
       className={cn(
         "inline-flex items-center gap-2 rounded-pill px-3 py-1.5 text-small font-medium shadow-soft backdrop-blur-md",
-        kind === "lock" ? "bg-surface-inverse/85 text-primary-foreground" : "bg-primary text-primary-foreground",
+        // Lock chip uses the fixed inverse reference tokens, so it stays dark-on-light-text even inside
+        // data-tone="inverse" (where primary-foreground re-maps to the dark surface).
+        kind === "lock" ? "bg-surface-inverse/90 text-text-inverse" : "bg-primary text-primary-foreground",
         className,
       )}
     >

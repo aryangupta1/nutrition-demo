@@ -109,3 +109,5 @@ export const stock = {
     alt: "A sprig of sage-green eucalyptus leaves against a soft, blurred cream and terracotta background",
   },
 } as const;
+
+export type StockKey = keyof typeof stock;

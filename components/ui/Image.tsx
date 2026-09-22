@@ -4,11 +4,12 @@ import { cn } from "@/lib/cn";
 export type ImageProps = Omit<NextImageProps, "alt"> & {
   /** Required. Describe the image; pass "" only for purely decorative images. */
   alt: string;
-  rounded?: "none" | "card" | "arch";
+  rounded?: "none" | "thumb" | "card" | "arch";
 };
 
 const radii = {
   none: "",
+  thumb: "rounded-thumb",
   card: "rounded-card",
   arch: "rounded-arch",
 } as const;

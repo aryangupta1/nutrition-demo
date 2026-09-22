@@ -1,6 +1,14 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
-import { contact, home, practitioner, site } from "@/content/site";
+import { contact, home, practitioner, preview, site } from "@/content/site";
+import { stock } from "@/content/stock";
+import { DrawPath } from "@/components/motion/DrawPath";
+import { FloatChips } from "@/components/motion/FloatChips";
+import { Reveal } from "@/components/motion/Reveal";
+import { LockChip, LockedOverlay, SkeletonText } from "@/components/preview/Locked";
+import { Chip } from "@/components/ui/Chip";
+import { Concerns } from "@/components/sections/Concerns";
+import { Eyebrow } from "@/components/sections/SectionIntro";
 import { buildMetadata } from "@/lib/seo";
 import { Accordion } from "@/components/ui/Accordion";
 import { Badge } from "@/components/ui/Badge";
@@ -58,6 +66,7 @@ const typeScale = [
 ];
 const radii = [
   { token: "sm", className: "rounded-sm" },
+  { token: "thumb", className: "rounded-thumb" },
   { token: "md", className: "rounded-md" },
   { token: "card", className: "rounded-card" },
   { token: "panel", className: "rounded-panel" },
@@ -141,6 +150,9 @@ export default function DesignSystemPage() {
             <div className="rounded-card bg-surface-raised p-6 shadow-lift">
               <code className="text-small">shadow-lift</code>
             </div>
+            <div className="rounded-pill bg-surface-raised px-6 py-4 shadow-chip">
+              <code className="text-small">shadow-chip</code>
+            </div>
           </div>
         </Block>
 
@@ -180,6 +192,64 @@ export default function DesignSystemPage() {
             <Text>
               <TextLink href={practitioner.practiceUrl}>{home.footer.practiceLinkLabel}</TextLink>
             </Text>
+          </div>
+        </Block>
+
+        <Block title="Accent headings and eyebrow pill">
+          <div className="flex flex-col items-start gap-4">
+            <Eyebrow>{home.services.eyebrow}</Eyebrow>
+            <Heading as="p" size="h2">
+              {home.services.heading}
+            </Heading>
+            <Text size="small" tone="muted">
+              Content strings mark one accent word with asterisks; Heading renders it. Use plain() from lib/accent.ts for
+              metadata, JSON-LD and llms.txt.
+            </Text>
+          </div>
+        </Block>
+
+        <Block title="Chips (FloatChips: staggered float-in, slow idle drift)">
+          <FloatChips className="flex flex-wrap gap-4">
+            {home.concerns.chips.slice(0, 4).map((chip) => (
+              <Chip key={chip.label} label={chip.label} image={chip.image} />
+            ))}
+          </FloatChips>
+        </Block>
+
+        <Block title="Motion: Reveal and DrawPath">
+          <Reveal className="grid gap-6 sm:grid-cols-3">
+            {home.approach.pillars.map((p) => (
+              <div key={p.title} data-reveal className="border-t border-border-strong pt-4">
+                <Heading as="p" size="h4">
+                  {p.title}
+                </Heading>
+                <Text tone="muted" className="mt-2">
+                  {p.body}
+                </Text>
+              </div>
+            ))}
+          </Reveal>
+          <DrawPath mode="play" className="mt-8 text-primary">
+            <svg viewBox="0 0 400 60" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="1.5" className="h-16 w-full max-w-md">
+              <path data-draw d="M10 40C80 0 140 0 200 30S330 60 390 20" strokeLinecap="round" />
+            </svg>
+          </DrawPath>
+        </Block>
+
+        <Block title="Preview primitives (SITE_MODE=preview only)">
+          <div className="flex flex-wrap items-center gap-3">
+            <LockChip />
+            <LockChip kind="input" />
+          </div>
+          <div data-tone="inverse" className="mt-6 flex flex-wrap items-center gap-3 rounded-card p-6">
+            <LockChip />
+            <LockChip kind="input" />
+          </div>
+          <div className="mt-6 grid gap-6 sm:grid-cols-2">
+            <SkeletonText lines={4} />
+            <LockedOverlay srLabel={preview.lockChip}>
+              <SkeletonText lines={4} />
+            </LockedOverlay>
           </div>
         </Block>
 
@@ -237,19 +307,28 @@ export default function DesignSystemPage() {
       <div className="mt-8 flex flex-col">
         <Nav name={practitioner.name} title={practitioner.shortTitle} links={site.nav} cta={home.hero.primaryCta} />
         <Hero content={home.hero} image={practitioner.image} />
-        <About content={home.about} practitioner={practitioner} id="ds-about" />
+        <Concerns content={home.concerns} id="ds-concerns" />
+        <About content={home.about} practitioner={practitioner} image={stock["about-desk"]} id="ds-about" />
         <Services content={home.services} id="ds-services" />
         <Approach content={home.approach} id="ds-approach" />
         <Testimonials content={home.testimonials} id="ds-testimonials" />
+        <Testimonials content={home.testimonials} placeholder={preview.needsInput.testimonials} id="ds-testimonials-preview" />
         <FAQ
           content={home.faq}
           id="ds-faq"
           aside={{ heading: home.cta.heading, body: home.cta.body, cta: home.hero.secondaryCta }}
         />
-        <CTA content={home.cta} clinics={contact.clinics} id="ds-contact" />
+        <CTA
+          content={home.cta}
+          clinics={contact.clinics}
+          background={stock["cta-botanical"]}
+          hours={preview.needsInput.hours}
+          id="ds-contact"
+        />
         <Section tone="sage">
           <Text size="small" tone="muted">
-            Testimonials renders nothing above because home.testimonials.items is empty.
+            The first Testimonials renders nothing because home.testimonials.items is empty; the second shows the
+            preview-only placeholder. The CTA above shows the preview-only clinic hours row.
           </Text>
         </Section>
         <Footer

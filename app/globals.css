@@ -92,13 +92,18 @@
   --radius-panel: 2rem;
   --radius-pill: 9999px;
   --radius-arch: 12rem 12rem 1.5rem 1.5rem; /* portrait frame */
+  --radius-thumb: 0.625rem; /* square chip thumbnails */
 
   /* ---------- Shadows (soft, warm) ---------- */
   --shadow-soft: 0 1px 2px rgb(43 33 26 / 0.05), 0 8px 24px -12px rgb(43 33 26 / 0.12);
   --shadow-lift: 0 2px 4px rgb(43 33 26 / 0.06), 0 18px 40px -18px rgb(43 33 26 / 0.22);
+  --shadow-chip: 0 1px 2px rgb(43 33 26 / 0.06), 0 14px 30px -16px rgb(43 33 26 / 0.3); /* floating pill chips */
 
   /* ---------- Motion ---------- */
   --ease-calm: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-drift: cubic-bezier(0.37, 0, 0.63, 1); /* idle float (anime.js uses "inOutSine") */
+  /* Scroll motion (anime.js) mirrors these in components/motion/config.ts:
+     reveal 900ms outQuart, stagger 90ms, chip drift 3.6-5.4s inOutSine, path draw 1.5s inOutSine on enter. */
   --default-transition-duration: 200ms;
   --default-transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
   --animate-rise: rise 700ms cubic-bezier(0.22, 1, 0.36, 1) both;

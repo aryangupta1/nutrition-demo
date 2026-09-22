@@ -1,77 +1,107 @@
 import type { home, practitioner as practitionerData } from "@/content/site";
-import { Card } from "@/components/ui/Card";
+import type { StockImage } from "@/content/stock";
+import { Reveal } from "@/components/motion/Reveal";
+import { Container } from "@/components/ui/Container";
 import { Heading } from "@/components/ui/Heading";
+import { Image } from "@/components/ui/Image";
 import { TextLink } from "@/components/ui/Link";
-import { Section } from "@/components/ui/Section";
-import { Text } from "@/components/ui/Text";
+import { Eyebrow } from "./SectionIntro";
 
 export type AboutProps = {
   content: typeof home.about;
   practitioner: typeof practitionerData;
+  /** Full-bleed photo for the split (decorative mood image by default). */
+  image?: StockImage;
   id?: string;
 };
 
-/** Story + pull quote + verified credentials. No photography required. */
-export function About({ content, practitioner, id = "about" }: AboutProps) {
+/**
+ * Edge-to-edge 50/50 split: a full-bleed photo on one half, the story and credentials on a tinted
+ * half. The quote follows as a large centred serif pull-quote (no box).
+ */
+export function About({ content, practitioner, image, id = "about" }: AboutProps) {
   const headingId = `${id}-heading`;
   const credentials = [...practitioner.credentials, ...practitioner.qualifications];
   return (
-    <Section id={id} tone="muted" aria-labelledby={headingId}>
-      <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
-        <div className="lg:col-span-7">
-          <Text size="eyebrow">{content.eyebrow}</Text>
-          <Heading id={headingId} className="mt-4">
-            {content.heading}
-          </Heading>
-          <Text size="lead" className="mt-6 max-w-measure">
-            {content.lead}
-          </Text>
-          <div className="mt-6 flex max-w-measure flex-col gap-4">
-            {content.paragraphs.map((p) => (
-              <Text key={p} tone="muted">
-                {p}
-              </Text>
-            ))}
+    <section id={id} aria-labelledby={headingId}>
+      <div className="grid bg-surface-muted lg:grid-cols-2">
+        {image ? (
+          <div className="relative aspect-4/3 sm:aspect-16/9 lg:aspect-auto">
+            {/* Mood photo only: decorative, so it doesn't repeat the story for screen readers. */}
+            <Image src={image.src} alt="" fill rounded="none" sizes="(min-width: 64rem) 50vw, 100vw" />
           </div>
-        </div>
+        ) : null}
 
-        <div className="flex flex-col gap-6 lg:col-span-5">
-          {content.quote ? (
-            <Card as="figure" tone="sage" padding="lg">
-              <blockquote>
-                <p className="font-display text-h3 text-text">&ldquo;{content.quote.text}&rdquo;</p>
-              </blockquote>
-              <figcaption className="mt-4 text-small font-medium text-text-muted">{content.quote.attribution}</figcaption>
-            </Card>
-          ) : null}
+        <div className="px-gutter py-section lg:pr-gutter lg:pl-16 xl:pl-20">
+          <Reveal className="max-w-measure">
+            <div data-reveal>
+              {content.eyebrow ? <Eyebrow>{content.eyebrow}</Eyebrow> : null}
+              <Heading id={headingId} className="mt-5">
+                {content.heading}
+              </Heading>
+            </div>
+            <p data-reveal className="mt-6 text-lead text-text">
+              {content.lead}
+            </p>
+            <div className="mt-6 flex flex-col gap-4">
+              {content.paragraphs.map((p) => (
+                <p data-reveal key={p} className="text-body text-text-muted">
+                  {p}
+                </p>
+              ))}
+            </div>
 
-          {credentials.length > 0 || practitioner.memberships.length > 0 ? (
-            <Card tone="raised">
-              {credentials.length > 0 ? (
-                <ul className="flex flex-col gap-3">
+            {credentials.length > 0 ? (
+              <div data-reveal className="mt-10">
+                <h3 className="text-eyebrow font-semibold text-primary uppercase">{content.credentialsLabel}</h3>
+                <ul className="mt-3 divide-y divide-border border-y border-border">
                   {credentials.map((c) => (
-                    <li key={c} className="flex gap-3 text-small text-text">
-                      <span aria-hidden="true" className="mt-2 size-1.5 shrink-0 rounded-pill bg-primary" />
+                    <li key={c} className="flex items-baseline gap-4 py-3 text-body text-text">
+                      <span aria-hidden="true" className="font-display text-h4 text-primary">
+                        ✦
+                      </span>
                       {c}
                     </li>
                   ))}
                 </ul>
-              ) : null}
-              {practitioner.memberships.length > 0 ? (
-                <ul className="mt-6 flex flex-wrap gap-x-6 gap-y-2 border-t border-border pt-6">
-                  {practitioner.memberships.map((m) => (
-                    <li key={m.name}>
-                      <TextLink href={m.url} className="inline-flex min-h-tap items-center text-small">
-                        {m.name}
-                      </TextLink>
-                    </li>
-                  ))}
-                </ul>
-              ) : null}
-            </Card>
-          ) : null}
+              </div>
+            ) : null}
+
+            {practitioner.memberships.length > 0 ? (
+              <p data-reveal className="mt-5 flex flex-wrap items-center gap-x-5 text-small text-text-muted">
+                <span>{content.membershipsLabel}</span>
+                {practitioner.memberships.map((m) => (
+                  <TextLink key={m.name} href={m.url} className="inline-flex min-h-tap items-center">
+                    {m.name}
+                  </TextLink>
+                ))}
+              </p>
+            ) : null}
+          </Reveal>
         </div>
       </div>
-    </Section>
+
+      {content.quote ? (
+        <div className="bg-surface pt-section">
+          <Container width="narrow">
+            <Reveal>
+              <figure className="flex flex-col items-center text-center">
+                <span aria-hidden="true" className="font-display text-display leading-none text-primary">
+                  &ldquo;
+                </span>
+                <blockquote>
+                  <p className="font-display text-h1 text-balance text-text">{content.quote.text}</p>
+                </blockquote>
+                <figcaption className="mt-8 flex items-center gap-3 text-small font-medium text-text-muted">
+                  <span aria-hidden="true" className="h-px w-8 bg-border-strong" />
+                  {content.quote.attribution}
+                  <span aria-hidden="true" className="h-px w-8 bg-border-strong" />
+                </figcaption>
+              </figure>
+            </Reveal>
+          </Container>
+        </div>
+      ) : null}
+    </section>
   );
 }

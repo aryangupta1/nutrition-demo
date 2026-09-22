@@ -9,7 +9,7 @@
 - **Design:** Framer template **Holistic** (visual style) + **the practice** (services grid/FAQ structure), both free under the Framer Community Terms. Used as a layout/style reference only; no template assets or copy (see `research/templates.md`).
 
 ## Stack & commands
-Next.js 16 (App Router, TypeScript), Tailwind CSS v4 (`@theme` in `app/globals.css`), next/font, next/image, next/og. No backend, no DB, no env vars. Deploy: Vercel zero-config.
+Next.js 16 (App Router, TypeScript), Tailwind CSS v4 (`@theme` in `app/globals.css`), next/font, next/image, next/og, anime.js v4 (motion only). No backend, no DB. No required env vars; optional `SITE_MODE=preview` (see Preview mode). Deploy: Vercel zero-config.
 - `npm run dev`: local dev at http://localhost:3000
 - `npm run build`: production build (must pass)
 - `npm run lint`: ESLint (must be clean)
@@ -21,19 +21,32 @@ Next.js 16 (App Router, TypeScript), Tailwind CSS v4 (`@theme` in `app/globals.c
 | `content/site.ts` | **All site copy** (single source; components never hard-code copy) |
 | `content/practitioner.md` | Raw verified facts extracted from NutritionPath (TODOs marked) |
 | `app/globals.css` | Design tokens (`@theme`): colours, type, spacing, radii, shadows, motion |
-| `components/ui/` | Primitives: Button, Container, Section, Heading, Text, Card, Badge, Link, Image, Accordion |
-| `components/sections/` | Patterns: Nav, Hero, About, Services, Approach, Testimonials, FAQ, CTA, Footer |
+| `components/ui/` | Primitives: Button, Container, Section, Heading (supports `*accent*` word), Text, Card, Badge, Chip, Link, Image, Accordion |
+| `components/sections/` | Patterns: Nav, Hero, Concerns, About, Services, Approach, Testimonials, FAQ, CTA, Footer |
+| `components/motion/` | anime.js client wrappers: Reveal, FloatChips, DrawPath (progressive enhancement, reduced-motion aware) |
+| `components/preview/` | Concept-preview UI: LockChip (`lock` / `input`), SkeletonText, LockedOverlay, PreviewBadge, FullBuildPanel |
+| `content/stock.ts`, `public/images/stock/` | Free Unsplash mood photos (credits in `research/asset-manifest.md`) |
+| `lib/site-mode.ts`, `proxy.ts`, `lib/content.ts` | Preview switch (only reader of SITE_MODE), unlock cookie, content gating |
 | `lib/seo/` | Metadata helpers + JSON-LD builders |
 | `app/sitemap.ts`, `app/robots.ts`, `app/llms.txt/route.ts` | Crawl + AI surface |
 | `research/` | Template research, audits, QA reports |
 | `DESIGN_SYSTEM.md`, `SEO_GEO.md` | Docs to keep in sync with code |
 | `.claude/agents/` | Project sub-agents (content-extractor, template-scout, design-system-builder, seo-geo-specialist, qa-reviewer) |
 
+## Preview mode
+- `SITE_MODE=preview` = concept preview for Annette: noindex + `Disallow: /`, empty sitemap, no JSON-LD, stub llms.txt, badge, teaser gating. Unset = the real site.
+- Gating happens on the server in `lib/content.ts`: locked items carry **title only**. Never pass withheld copy to components, JSON-LD or llms.txt in preview.
+- "To be built" = teaser-locked; "Needs your input" = blocked on Annette (testimonials, hours, fees). Copy in `content/site.ts` `preview`.
+- Test both modes before done: `SITE_MODE=preview npm run build` must also be clean.
+
 ## Design system rules
 - Use tokens only. No raw hex, px values, or arbitrary Tailwind values (`[...]`) in components.
 - Reuse primitives. Build new UI from `components/ui/` before writing new markup/styling.
 - Server components by default. Add `"use client"` only when interaction truly needs it (prefer native `<details>`).
 - WCAG AA contrast for all text/background token pairs. Visible focus states. Respect `prefers-reduced-motion`.
+- Avoid boxy card grids. Prefer the Holistic devices: floating chips, one accent word per heading, edge-to-edge splits, line icons + drawn paths, hairline lists.
+- Motion: anime.js only via `components/motion/`. Never animate the LCP (hero H1/headshot). Content must be visible without JS.
+- Stock photos: free Unsplash License only, no identifiable people, logged in `research/asset-manifest.md`.
 
 ## Content rules
 - **Never fabricate** qualifications, memberships, years of experience, testimonials, statistics, prices, or health claims.
