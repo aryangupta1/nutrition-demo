@@ -3,10 +3,10 @@
 # Nutritionist Site — Project Instructions
 
 ## Overview
-- **Client:** a nutrition practitioner currently listed on NutritionPath (profile: https://nutritionpath.com.au/blog/f/about-me). Verified details live in `content/practitioner.md`.
-- **Purpose:** a standalone personal website that builds her own brand, ranks for her name and local/specialty searches (SEO), and gets cited by AI assistants (GEO). It complements NutritionPath; it does not replace it.
+- **Client:** Annette Low, BND(Hon), APD, AdvDipNat, dietitian, nutritionist and naturopath (Marrickville + Potts Point, Sydney, and telehealth). Her own practice site is Nutritionpath (https://nutritionpath.com.au, profile: /blog/f/about-me). Verified details live in `content/practitioner.md`.
+- **Purpose:** a **personal-name** website that builds her own brand, ranks for her name and local/specialty searches (SEO), and gets cited by AI assistants (GEO). It complements the Nutritionpath practice site, and all booking goes to its PracSuite system.
 - **Audience:** prospective clients looking for a nutritionist in her area or specialty. `/why-a-website` is an internal pitch for the practitioner herself.
-- **Design:** based on a free Framer Marketplace template, rebuilt in code. Used as a **layout/style reference only** unless its licence clearly allows more (see `research/templates.md`).
+- **Design:** Framer template **Holistic** (visual style) + **the practice** (services grid/FAQ structure), both free under the Framer Community Terms. Used as a layout/style reference only; no template assets or copy (see `research/templates.md`).
 
 ## Stack & commands
 Next.js 16 (App Router, TypeScript), Tailwind CSS v4 (`@theme` in `app/globals.css`), next/font, next/image, next/og. No backend, no DB, no env vars. Deploy: Vercel zero-config.
