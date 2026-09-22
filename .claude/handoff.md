@@ -1,9 +1,9 @@
 # Handoff
 
-_Last updated: 2026-09-22 (end of Phase 2 — awaiting user decisions)_
+_Last updated: 2026-09-22 (Phase 3 in progress)_
 
 ## Current phase
-Phase 2 done. **Blocked on user: template choice + site framing** (see Blockers).
+Phase 3 (design system) running via design-system-builder. content/site.ts written (home + whyWebsite copy).
 
 ## Completed
 - Phase 0: Next.js 16.3.5 scaffold, CLAUDE.md, SessionStart/Stop hooks (tested end-to-end with `claude -p`), 5 sub-agents.
@@ -14,6 +14,13 @@ Phase 2 done. **Blocked on user: template choice + site framing** (see Blockers)
 - Project agents in .claude/agents/ don't register until a new session; this session ran them as general-purpose agents given the agent file as instructions.
 - Licence: Free Content may be used/modified for client work in a broader product; still treating template as layout/style reference only (no assets/copy copied).
 - Fees, hours, cancellation policy NOT to be published until Annette reconfirms (her site has conflicting values).
+
+## User decisions (2026-09-22)
+- Template: **Holistic** visual style + **the practice** services-grid/FAQ structure.
+- Framing: **personal-name site** for Annette; Nutritionpath remains practice/booking site. Bookings link to PracSuite.
+- robots.ts: `*` allow all; explicitly name **OpenAI only** (GPTBot, OAI-SearchBot, ChatGPT-User). Others still allowed via wildcard, confirm with user they didn't mean to block.
+- Headshot downloaded from her site to public/images, EXIF/GPS stripped.
+- /why-a-website: don't claim free hosting (Vercel Hobby is non-commercial; business needs Pro).
 
 ## Key finding
 nutritionpath.com.au is **Annette's own practice website** (GoDaddy builder), not a third-party directory. The brief's "/why-a-website = bonus on top of NutritionPath listing" framing needs adjusting. Asked user.
@@ -26,7 +33,7 @@ nutritionpath.com.au is **Annette's own practice website** (GoDaddy builder), no
 - Node 20.9 → suggest upgrading to 22 LTS (EBADENGINE warnings).
 
 ## Blockers
-User to choose template and confirm framing/domain.
+None (domain TBD, site.url falls back to Vercel URL).
 
 ## Next step
-On user's choice: run design-system-builder (Phase 3) with the chosen template.
+Review Phase 3 output, commit, then Phase 4 pages + Phase 5 seo-geo-specialist.
