@@ -1,26 +1,32 @@
 # Handoff
 
-_Last updated: 2026-09-22 (Phase 0)_
+_Last updated: 2026-09-22 (end of Phase 2 — awaiting user decisions)_
 
 ## Current phase
-Phase 1 (content extraction) + Phase 2 (template scouting), in progress.
+Phase 2 done. **Blocked on user: template choice + site framing** (see Blockers).
 
 ## Completed
-- Phase 0: Next.js 16.3.5 scaffold (App Router, TS, Tailwind v4, ESLint) at ~/nutritionist-site with git init.
-- CLAUDE.md, SessionStart + Stop hooks (.claude/settings.json, .claude/hooks/), 5 sub-agents (.claude/agents/).
+- Phase 0: Next.js 16.3.5 scaffold, CLAUDE.md, SessionStart/Stop hooks (tested end-to-end with `claude -p`), 5 sub-agents.
+- Phase 1: `content/practitioner.md` — Annette Low, BND(Hon), APD, AdvDipNat; practice "Nutritionpath"; Marrickville + Potts Point (Sydney) + telehealth AU-wide. Sourced per fact.
+- Phase 2: `research/templates.md` — shortlist Holistic / the practice / Avelune Well (all Free, Framer Community Terms "Limited Commercial License").
 
 ## Decisions
-- Project dir `~/nutritionist-site` (neutral name until the practitioner's name/brand is confirmed; can rename).
-- Tailwind v4 → tokens live in `@theme` in app/globals.css (no tailwind.config).
-- Stop hook only nags when project files changed since session start and handoff wasn't updated (avoids noise on Q&A sessions); loop-guarded via stop_hook_active.
+- Project agents in .claude/agents/ don't register until a new session; this session ran them as general-purpose agents given the agent file as instructions.
+- Licence: Free Content may be used/modified for client work in a broader product; still treating template as layout/style reference only (no assets/copy copied).
+- Fees, hours, cancellation policy NOT to be published until Annette reconfirms (her site has conflicting values).
 
-## Open TODOs
-- Phase 1: extract content → content/practitioner.md
-- Phase 2: shortlist 3 free Framer templates → research/templates.md, then WAIT for user choice.
-- Node is 20.9.0; some dev deps want ≥20.19 (EBADENGINE warnings). Suggest upgrading Node to 22 LTS.
+## Key finding
+nutritionpath.com.au is **Annette's own practice website** (GoDaddy builder), not a third-party directory. The brief's "/why-a-website = bonus on top of NutritionPath listing" framing needs adjusting. Asked user.
+
+## Open TODOs (need Annette)
+- Testimonials: none exist on her site → section hidden until she supplies approved ones.
+- Reconcile clinic days/hours (about-me vs Contact vs Visit Us), fees dates, 24h vs 48h cancellation, email `hello@nutritionpath.co` (.co?).
+- High-res headshot; LinkedIn / Google Business Profile URLs for sameAs.
+- FAQ answers for Qs 10–13 in practitioner.md.
+- Node 20.9 → suggest upgrading to 22 LTS (EBADENGINE warnings).
 
 ## Blockers
-None.
+User to choose template and confirm framing/domain.
 
 ## Next step
-Run content-extractor and template-scout; present the template shortlist to the user and wait for a choice.
+On user's choice: run design-system-builder (Phase 3) with the chosen template.
