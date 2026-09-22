@@ -40,6 +40,9 @@ Round 2 complete (2026-09-22): raresg-style concept-preview mode, Holistic-style
 - User: confirm robots intent (only OpenAI named; others allowed via wildcard, not blocked).
 - Optional: close mobile menu on anchor tap (tiny client component); upgrade Node to 22 LTS.
 
+## Gotchas
+- SITE_MODE is baked in at BUILD time (static pages). Changing .env needs a rebuild. Port 3000 is taken by a Docker app (Multica); this site runs on 3457 (`next start -p 3457`). `.env.example` is never loaded.
+
 ## Blockers
 None technical. Deploy/domain needs user go-ahead.
 
