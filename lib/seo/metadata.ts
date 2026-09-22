@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { home, practitioner, site } from "@/content/site";
+import { isPreview } from "@/lib/site-mode";
 
 /**
  * Shared social image (app/opengraph-image.tsx, app/twitter-image.tsx). File-based images only
@@ -53,6 +54,6 @@ export function buildMetadata({ title, description, path, absoluteTitle, noindex
       description: desc,
       images: [{ url: "/twitter-image", ...socialImage }],
     },
-    ...(noindex ? { robots: { index: false, follow: false } } : {}),
+    ...(noindex || isPreview ? { robots: { index: false, follow: false } } : {}),
   };
 }

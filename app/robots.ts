@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { absoluteUrl } from "@/lib/seo";
+import { isPreview } from "@/lib/site-mode";
 
 /**
  * Everything is crawlable. Internal pages (/design-system, /why-a-website) are kept out of
@@ -13,6 +14,8 @@ import { absoluteUrl } from "@/lib/seo";
 const openAiBots = ["GPTBot", "OAI-SearchBot", "ChatGPT-User"];
 
 export default function robots(): MetadataRoute.Robots {
+  // Concept previews: block everything (plus noindex meta and X-Robots-Tag from proxy.ts).
+  if (isPreview) return { rules: [{ userAgent: "*", disallow: "/" }] };
   return {
     rules: [
       { userAgent: "*", allow: "/" },

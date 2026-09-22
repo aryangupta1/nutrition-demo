@@ -1,5 +1,6 @@
 import { contact, home, practitioner, site } from "@/content/site";
 import { absoluteUrl } from "@/lib/seo";
+import { isPreview } from "@/lib/site-mode";
 
 /**
  * /llms.txt (https://llmstxt.org): a plain Markdown summary for AI assistants.
@@ -64,8 +65,11 @@ function body(): string {
   return lines.join("\n");
 }
 
+// Concept previews publish nothing for AI crawlers (and must not leak withheld copy).
+const previewBody = `# ${practitioner.name}\n\n> Concept preview. Not for indexing.\n`;
+
 export function GET() {
-  return new Response(body(), {
+  return new Response(isPreview ? previewBody : body(), {
     headers: { "Content-Type": "text/plain; charset=utf-8" },
   });
 }

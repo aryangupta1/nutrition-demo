@@ -414,3 +414,56 @@ export const whyWebsite = {
     ],
   },
 };
+
+/**
+ * Concept-preview chrome. Only used when SITE_MODE=preview (see lib/site-mode.ts).
+ * Framing: this is a concept of a site that is NOT finished. Locked areas are "to be built";
+ * areas waiting on Annette's details are marked "needs your input".
+ * Withheld copy is never sent to the browser (see lib/content.ts).
+ */
+export const preview = {
+  banner: {
+    text: "Concept preview: a proposed personal website for Annette Low",
+    authorName: "Aryan Gupta",
+    ctaLabel: "aryan.gupta1@outlook.com",
+    ctaHref: "mailto:aryan.gupta1@outlook.com",
+    pitchLink: { label: "Why a personal website?", href: "/why-a-website" },
+    dismissLabel: "Dismiss preview notice",
+  },
+  lockChip: "To be built",
+  needsInputChip: "Needs your input",
+  // How much of each homepage section is live in preview. The rest renders as locked placeholders.
+  teaser: {
+    servicesLive: 1,
+    pillarsLive: 1,
+    stepsLive: 1,
+    faqLive: 2,
+  },
+  // Blocked on Annette: rendered in preview only, so she can see where her details will go.
+  needsInput: {
+    testimonials: {
+      eyebrow: "Client stories",
+      heading: "Your clients, in their own words",
+      body: "Real testimonials go here, shared with each client's permission. None are published on your current site, so this stays empty until you provide some.",
+    },
+    hours: {
+      label: "Clinic hours",
+      body: "Your current site lists different days and hours on different pages. Confirm them and they'll appear here and in Google's business details.",
+    },
+    fees: {
+      label: "Fees",
+      body: "Show your consultation fees here, or leave them on Nutritionpath. Your call.",
+    },
+  },
+  fullBuildPanel: {
+    heading: "What the full site includes",
+    items: [
+      "All six areas of expertise, written up in full",
+      "The complete FAQ, answered from your own site",
+      "Your approach and what to expect, step by step",
+      "Clinic hours, fees and testimonials, once you've confirmed them",
+      "SEO, structured data and AI-search optimisation",
+      "Your own domain, hosted on Vercel",
+    ],
+  },
+};
