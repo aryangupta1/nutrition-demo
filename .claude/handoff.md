@@ -1,41 +1,39 @@
 # Handoff
 
-_Last updated: 2026-09-22 (Phase 5 in progress)_
+_Last updated: 2026-09-22 (all phases 0–7 complete)_
 
 ## Current phase
-Phases 3, 4, 6 done and committed. Phase 5 (SEO/GEO) running via seo-geo-specialist. Then Phase 7 QA.
+Build complete. Awaiting Annette's confirmations and the user's domain/deploy decision.
 
 ## Completed
-- Phase 0: Next.js 16.3.5 scaffold, CLAUDE.md, SessionStart/Stop hooks (tested end-to-end with `claude -p`), 5 sub-agents.
-- Phase 1: `content/practitioner.md` — Annette Low, BND(Hon), APD, AdvDipNat; practice "Nutritionpath"; Marrickville + Potts Point (Sydney) + telehealth AU-wide. Sourced per fact.
-- Phase 2: `research/templates.md` — shortlist Holistic / the practice / Avelune Well (all Free, Framer Community Terms "Limited Commercial License").
+- Phase 0: Next.js 16.3.5 + TS + Tailwind v4 scaffold, CLAUDE.md, SessionStart/Stop hooks (tested), 5 sub-agents.
+- Phase 1: content/practitioner.md (sourced facts; TODOs listed).
+- Phase 2: research/templates.md. Chosen: Holistic style + "the practice" services/FAQ structure (Framer Community Terms; used as reference only).
+- Phase 3: tokens in app/globals.css, components/ui + components/sections, DESIGN_SYSTEM.md, /design-system (noindex).
+- Phase 4/6: `/` and `/why-a-website` (noindex, footer link only), all copy in content/site.ts.
+- Phase 5: lib/seo, JSON-LD @graph, robots (OpenAI named, no Disallow), sitemap (/ only), llms.txt, OG/Twitter images, SEO_GEO.md, research/seo-audit.md.
+- Phase 7: research/qa-report.md. Lighthouse `/`: mobile 96/100/100/100, desktop 100/100/100/100. axe 0 violations. JSON-LD valid, FAQ matches. True 375/768/1440 checks pass (via puppeteer emulation). README written.
 
-## Decisions
-- Project agents in .claude/agents/ don't register until a new session; this session ran them as general-purpose agents given the agent file as instructions.
-- Licence: Free Content may be used/modified for client work in a broader product; still treating template as layout/style reference only (no assets/copy copied).
-- Fees, hours, cancellation policy NOT to be published until Annette reconfirms (her site has conflicting values).
+## Decisions (and why)
+- Personal-name site; Nutritionpath is her own practice site, and bookings go to PracSuite (https://nutritionpath.bookings.pracsuite.com).
+- robots: `*` allow all, OpenAI bots named per user. Internal pages use noindex, NOT Disallow (so Google can see the noindex).
+- H1 includes her name (entity signal).
+- Headshot: EXIF/GPS stripped.
+- No prices, hours, email or testimonials published until Annette confirms them.
 
-## User decisions (2026-09-22)
-- Template: **Holistic** visual style + **the practice** services-grid/FAQ structure.
-- Framing: **personal-name site** for Annette; Nutritionpath remains practice/booking site. Bookings link to PracSuite.
-- robots.ts: `*` allow all; explicitly name **OpenAI only** (GPTBot, OAI-SearchBot, ChatGPT-User). Others still allowed via wildcard, confirm with user they didn't mean to block.
-- Headshot downloaded from her site to public/images, EXIF/GPS stripped.
-- /why-a-website: don't claim free hosting (Vercel Hobby is non-commercial; business needs Pro).
-
-- Phase 3/4/6: design reviewed in Chrome at 1440px; fixed approach number alignment; FAQ aside card added; turbopack.root pinned in next.config.ts (stray ~/package-lock.json, not deleted).
-
-## Key finding
-nutritionpath.com.au is **Annette's own practice website** (GoDaddy builder), not a third-party directory. The brief's "/why-a-website = bonus on top of NutritionPath listing" framing needs adjusting. Asked user.
-
-## Open TODOs (need Annette)
-- Testimonials: none exist on her site → section hidden until she supplies approved ones.
-- Reconcile clinic days/hours (about-me vs Contact vs Visit Us), fees dates, 24h vs 48h cancellation, email `hello@nutritionpath.co` (.co?).
-- High-res headshot; LinkedIn / Google Business Profile URLs for sameAs.
-- FAQ answers for Qs 10–13 in practitioner.md.
-- Node 20.9 → suggest upgrading to 22 LTS (EBADENGINE warnings).
+## Open TODOs (need Annette / user)
+- Clinic days/hours (her site conflicts) → contact.openingHours + schema.
+- Email (site shows hello@nutritionpath.co).
+- Fees: publish or not? (Her fees page has conflicting dates.)
+- Testimonials (none exist) → home.testimonials.items.
+- Domain → site.url; LinkedIn / Google Business Profile → sameAs.
+- Higher-res headshot (current is 1200px from her site).
+- Brand capitalisation "Nutritionpath" vs "NutritionPath" (using "Nutritionpath" to match her logo).
+- User: confirm robots intent (only OpenAI named; others allowed via wildcard, not blocked).
+- Optional: close mobile menu on anchor tap (tiny client component); upgrade Node to 22 LTS.
 
 ## Blockers
-None (domain TBD, site.url falls back to Vercel URL).
+None technical. Deploy/domain needs user go-ahead.
 
 ## Next step
-Review Phase 5 output (lib/seo, robots, sitemap, llms.txt, OG, JSON-LD, SEO_GEO.md), commit, then run qa-reviewer (Phase 7), README, final summary.
+Share `/why-a-website` + TODO list with Annette. On answers, update content/site.ts, run build/lint, push to a Git remote, and import it into Vercel (see README).

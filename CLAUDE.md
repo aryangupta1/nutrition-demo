@@ -61,6 +61,10 @@ Next.js 16 (App Router, TypeScript), Tailwind CSS v4 (`@theme` in `app/globals.c
 - Ask the user before hard-to-reverse decisions (template choice, AI-crawler list, domain, deploy).
 - Keep dependencies minimal. Ask before adding one.
 
+## Testing notes
+- The Chrome extension's `resize_window` may not change the viewport, and headless Chrome on macOS has a 500px minimum width. For true 375/768 checks, use puppeteer-core `setViewport` (see research/qa-report.md addendum).
+- `.claude/agents/*` load only at session start. In the session that creates them, run a general-purpose agent pointed at the agent file.
+
 ## Session handoff (mandatory)
 - `.claude/handoff.md` is injected at session start by a SessionStart hook (`.claude/settings.json`).
 - **After completing any phase, and before ending a session, overwrite `.claude/handoff.md`** with: current phase, completed, decisions (and why), open TODOs, blockers, exact next step.
