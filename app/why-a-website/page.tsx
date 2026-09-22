@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { whyWebsite } from "@/content/site";
+import { buildMetadata } from "@/lib/seo";
 import { Badge } from "@/components/ui/Badge";
 import { Card } from "@/components/ui/Card";
 import { Heading } from "@/components/ui/Heading";
@@ -9,11 +10,12 @@ import { SectionIntro } from "@/components/sections/SectionIntro";
 import { SiteChrome } from "@/components/sections/SiteChrome";
 
 // Internal pitch for Annette: noindex, excluded from the sitemap, linked from the footer only.
-export const metadata: Metadata = {
+export const metadata: Metadata = buildMetadata({
   title: whyWebsite.meta.title,
   description: whyWebsite.meta.description,
-  robots: { index: false, follow: false },
-};
+  path: "/why-a-website",
+  noindex: true,
+});
 
 const pad = (n: number) => String(n).padStart(2, "0");
 

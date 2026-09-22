@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import { contact, home, practitioner, site } from "@/content/site";
+import { buildMetadata } from "@/lib/seo";
 import { Accordion } from "@/components/ui/Accordion";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
@@ -22,10 +23,11 @@ import { Services } from "@/components/sections/Services";
 import { Testimonials } from "@/components/sections/Testimonials";
 
 // Internal reference page. Never indexed, excluded from the sitemap.
-export const metadata: Metadata = {
+export const metadata: Metadata = buildMetadata({
   title: "Design system",
-  robots: { index: false, follow: false },
-};
+  path: "/design-system",
+  noindex: true,
+});
 
 // Class names are literal so Tailwind can detect them.
 const surfaces = [

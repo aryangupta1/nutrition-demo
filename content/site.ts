@@ -49,6 +49,8 @@ export const practitioner = {
   shortTitle: "Dietitian, Nutritionist & Naturopath",
   practiceName: "Nutritionpath",
   practiceUrl: "https://nutritionpath.com.au",
+  /** Her own bio page on the Nutritionpath site (source A in practitioner.md). Used for schema sameAs. */
+  profileUrl: "https://nutritionpath.com.au/blog/f/about-me",
   image: {
     src: "/images/annette-low.jpg",
     width: 1200,
@@ -128,6 +130,8 @@ export const site = {
   locale: "en_AU",
   name: `${practitioner.name}, ${practitioner.shortTitle}`,
   titleTemplate: `%s | ${practitioner.name}`,
+  /** Label for the home item in BreadcrumbList schema. */
+  homeLabel: "Home",
   defaultTitle: `${practitioner.name}: Dietitian, Nutritionist & Naturopath in Sydney`,
   description:
     "Annette Low is an Accredited Practising Dietitian, nutritionist and naturopath seeing adults and teenagers in Marrickville and Potts Point, Sydney, and by telehealth across Australia.",
@@ -143,10 +147,10 @@ export const site = {
 export const home = {
   hero: {
     eyebrow: "Marrickville · Potts Point · Telehealth",
-    heading: "Dietitian, nutritionist and naturopath in Sydney",
+    heading: "Annette Low, dietitian, nutritionist and naturopath in Sydney",
     // Answer-first: who, what, who she helps, where.
     lead:
-      "I'm Annette Low, an Accredited Practising Dietitian and naturopath. I help adults and teenagers with digestive, metabolic, hormonal and chronic health concerns, in clinic in Marrickville and Potts Point and by telehealth across Australia.",
+      "I'm an Accredited Practising Dietitian and naturopath. I help adults and teenagers with digestive, metabolic, hormonal and chronic health concerns, in clinic in Marrickville and Potts Point and by telehealth across Australia.",
     primaryCta: { label: "Book a consultation", href: contact.bookingUrl },
     secondaryCta: { label: "Book a free 10-minute call", href: contact.bookingUrl },
   },
@@ -171,7 +175,7 @@ export const home = {
     eyebrow: "Areas of expertise",
     heading: "What Annette can help with",
     lead:
-      "Annette works with adults and teenagers on digestive, metabolic, hormonal, immune and chronic health concerns, using food first and adding supplements or functional testing where appropriate.",
+      "Annette Low works with adults and teenagers on digestive, metabolic, hormonal, immune and chronic health concerns, using food first and adding supplements or functional testing where appropriate.",
     items: [
       {
         slug: "digestive-health",
@@ -229,7 +233,7 @@ export const home = {
     eyebrow: "How Annette works",
     heading: "Patterns, processes and personalisation",
     lead:
-      "Everyone responds to food differently. Annette's approach combines evidence-based nutrition with a detailed look at your symptoms, health history, diet and relevant test results.",
+      "Annette Low's approach combines evidence-based nutrition with a detailed look at your symptoms, health history, diet and relevant test results, because everyone responds to food differently.",
     pillars: [
       { title: "Patterns of intake", body: "What you eat and take, including your diet, supplements, meal structure and timing." },
       { title: "Health processes", body: "How digestion, metabolism and hormones influence the way your body is working and responding to food, with testing where appropriate." },

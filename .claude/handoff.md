@@ -1,9 +1,9 @@
 # Handoff
 
-_Last updated: 2026-09-22 (Phase 3 in progress)_
+_Last updated: 2026-09-22 (Phase 5 in progress)_
 
 ## Current phase
-Phase 3 (design system) running via design-system-builder. content/site.ts written (home + whyWebsite copy).
+Phases 3, 4, 6 done and committed. Phase 5 (SEO/GEO) running via seo-geo-specialist. Then Phase 7 QA.
 
 ## Completed
 - Phase 0: Next.js 16.3.5 scaffold, CLAUDE.md, SessionStart/Stop hooks (tested end-to-end with `claude -p`), 5 sub-agents.
@@ -22,6 +22,8 @@ Phase 3 (design system) running via design-system-builder. content/site.ts writt
 - Headshot downloaded from her site to public/images, EXIF/GPS stripped.
 - /why-a-website: don't claim free hosting (Vercel Hobby is non-commercial; business needs Pro).
 
+- Phase 3/4/6: design reviewed in Chrome at 1440px; fixed approach number alignment; FAQ aside card added; turbopack.root pinned in next.config.ts (stray ~/package-lock.json, not deleted).
+
 ## Key finding
 nutritionpath.com.au is **Annette's own practice website** (GoDaddy builder), not a third-party directory. The brief's "/why-a-website = bonus on top of NutritionPath listing" framing needs adjusting. Asked user.
 
@@ -36,4 +38,4 @@ nutritionpath.com.au is **Annette's own practice website** (GoDaddy builder), no
 None (domain TBD, site.url falls back to Vercel URL).
 
 ## Next step
-Review Phase 3 output, commit, then Phase 4 pages + Phase 5 seo-geo-specialist.
+Review Phase 5 output (lib/seo, robots, sitemap, llms.txt, OG, JSON-LD, SEO_GEO.md), commit, then run qa-reviewer (Phase 7), README, final summary.
